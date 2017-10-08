@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {{template "head_include_css_js.tpl" .}}
+
+  <style type="text/css">
+			body { text-align:center;}
+			.centerDiv { display:inline-block; zoom:1; *display:inline;text-align:left; vertical-align:middle; width:350px;}
+  </style>
+
+  <script>
+    $(document).ready(function(){ 
+      if (isPhone()) {
+        $("#divLogin").css("zoom",2);
+      }
+      
+      //检查登录用户名
+      $("#login-user").focusout(function(){
+        if($("#login-user").val().length==0)
+        {
+          $("#login-user").attr('placeholder',"请输入用户名")
+          return;
+        } 
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/U/UsernameExist?v='+$("#login-user").val(), true);
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText=="false") { // 读取完成
+                $("#login-user").attr('placeholder',"用户名不存在")
+                $("#login-user").val("")
+            }
+        }
+      });
+
+      //检查注册用户名
+       $("#reg-user").focusout(function(){
+        if($("#reg-user").val().length==0)
+        {
+          $("#reg-user").attr('placeholder',"请输入用户名")
+          return;
+        } 
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/U/UsernameExist?v='+$("#reg-user").val(), true);
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText=="true") { // 读取完成
+                $("#reg-user").attr('placeholder',"用户名已存在")
+                $("#reg-user").val("")
+            }
+        }
+      });
+
+    //检查注册信息
+    $("#reg-submit").click(function(){
+      if($("#reg-pass-confirm").val()!=$("#reg-pass").val()){
+        $("#reg-pass-confirm").attr('placeholder',"两次密码输入不一致")
+        $("#reg-pass-confirm").val("")
+        return false;
+      }
+
+      if($("#reg-user").val().length==0 || $("#reg-name").val().length==0 || $("#reg-pass").val().length==0 || $("#reg-pass-confirm").val().length==0 )
+      {
+        alert("注册信息不完整");
+        return false;
+      }
+    });
+
+    //检查登录信息
+    $("#login-submit").click(function(){
+      if($("#login-user").val().length==0 || $("#login-pass").val().length==0 )
+      {
+        alert("帐号密码不能为空");
+        return false;
+      }
+    });
+
+
+    }); 
+  
+  </script>
+
+</head>
+
+<body>
+  <div class="jumbotron alignCenter">
+    <h1>eeRemote</h1>
+    <p>高效远程诊断系统</p>
+  </div>
+
+  <div class="centerDiv" id="divLogin">
+    <ul class="nav nav-tabs">
+      <li><a style="width:50px;" disabled ></a></li>
+      <li class="active"><a href="#loginPane" data-toggle="tab" style="width:100px;text-align:center;" >登录</a></li>
+      <li><a href="#registerPane" data-toggle="tab" style="width:100px;text-align:center;">注册</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div class="tab-pane in active" id="loginPane" >
+        <form class="navbar-form navbar-left"  method="post" action="/U/Login">
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon" ><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                    <input type="text" id="login-user" name="username" class="form-control" placeholder="用户名" >
+                  </div>
+                </li>
+                <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                    <input type="password" id="login-pass" name="pass" class="form-control" placeholder="密码">
+                  </div>
+                </li>
+                <li class="list-group-item noBorder">
+                    <button type="submit" id="login-submit" class="btn btn-default maxWidth">登录</button>
+                </li>
+              </ul>
+            </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="registerPane">
+        <form class="navbar-form navbar-left"  method="post" action="/U/Register">
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon" ><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                    <input type="text" id="reg-user" name="username" class="form-control" placeholder="用户名">
+                  </div>  
+                </li>
+                 <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon" ><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                    <input type="text" id="reg-name" name="familyname" class="form-control" placeholder="姓名">
+                  </div>
+                </li>
+                <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                    <input type="password" id="reg-pass" name="pass" class="form-control" placeholder="密码">
+                  </div>
+                </li>
+                <li class="list-group-item noBorder">
+                  <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                    <input type="password"  id="reg-pass-confirm" class="form-control" placeholder="密码确认">
+                  </div>
+                </li>
+                <li class="list-group-item noBorder">
+                    <button type="submit" id="reg-submit" class="btn btn-default maxWidth">注册</button>
+                </li>
+              </ul>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  {{template "footer.tpl" .}}
+</body>
+
+</html>

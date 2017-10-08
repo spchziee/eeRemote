@@ -1,0 +1,64 @@
+<html>
+	<head>
+         {{template "head_include_css_js.tpl" .}}
+	</head>
+	<body>
+		<div class="panel panel-default">
+			<div class="panel-heading">无法浏览图像？</div>
+			<div class="panel-body">
+				<ul>
+					<li>打开IE浏览器——工具——Internet选项——安全 这个选项卡</li>
+					<li>选择Internet——自定义级别</li>
+					<li>找到【对未标记为可安全执行脚本的ActiveX控件初始化并执行】，设置为【启用】——确定</li>
+					<li>在浏览图像时，如果提示是否允许运行加载项,请选择允许</li>
+					<li>在浏览图像时，会弹出一个窗口，请不要阻止</li>
+					<li>运行dcmViewer文件夹中的【注册控件.bat】</li>
+					<li>360之类的软件可能会提示阻止，请允许</li>
+					<li>客户端在此下载浏览图像控件</li>
+					<li><a href="/Download/DCMViewer.zip">控件包</a></li>
+					<li>下载后【右键】【以管理员身份运行】文件夹中的【注册控件.bat】</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">打印设置</div>
+			<div class="panel-body">
+				<ul>
+					<li>打开IE浏览器——工具——Internet选项——安全 这个选项卡</li>
+					<li>选择Internet——自定义级别</li>
+					<li>找到【对没有标记为安全的ActiveX控件进行初始化和脚本运行】，设置为【启用】——确定</li>
+					<li>可以在打印预览的页面设置中修改页面的四周边距，上下边距可以修改为0,左边距修改为19.05</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">如何设置显示影像窗口在另一个显示器</div>
+			<div class="panel-body">
+				<ul>
+					<li>显卡设置中心中设置双屏显示，浏览图像的显示器放在右边</li>
+					<li>打开IE浏览器——工具——Internet选项——安全 这个选项卡</li>
+					<li>选择Internet——自定义级别</li>
+					<li>找到【允许由脚本初始化的窗口，没有大小和位置限制】，设置为【启用】——确定</li>
+					<li>如需关闭……</li>
+					<li>找到【允许由脚本初始化的窗口，没有大小和位置限制】，设置为【禁用】——确定</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">关于本系统</div>
+			<div class="panel-body">
+				<ul>
+					<li>软件中文名:美诺瓦远程会诊系统</li>
+					<li>软件英文名:eeRemote</li>
+					<li>版本号:2.0.1</li>
+					<li>所属公司:美诺瓦医疗科技有限公司</li>
+				</ul>
+			</div>
+		</div>
+
+		<div style="text-align:center" > {{template "footer.tpl" .}}   </div>
+	</body>
+</html>
